@@ -4,7 +4,7 @@
 #
 Name     : pypi-nbconvert
 Version  : 6.4.0
-Release  : 52
+Release  : 53
 URL      : https://files.pythonhosted.org/packages/d3/ec/5dc28779d9210d6f19f2f45839558732938d60bfb4bc4818cc2d2945be2b/nbconvert-6.4.0.tar.gz
 Source0  : https://files.pythonhosted.org/packages/d3/ec/5dc28779d9210d6f19f2f45839558732938d60bfb4bc4818cc2d2945be2b/nbconvert-6.4.0.tar.gz
 Summary  : Converting Jupyter Notebooks
@@ -15,18 +15,7 @@ Requires: pypi-nbconvert-data = %{version}-%{release}
 Requires: pypi-nbconvert-license = %{version}-%{release}
 Requires: pypi-nbconvert-python = %{version}-%{release}
 Requires: pypi-nbconvert-python3 = %{version}-%{release}
-Requires: bleach
-Requires: entrypoints
-Requires: mistune
-Requires: nbformat
-Requires: pandocfilters
-Requires: testpath
-Requires: traitlets
-BuildRequires : bleach
 BuildRequires : buildreq-distutils3
-Provides: nbconvert
-Provides: nbconvert-python
-Provides: nbconvert-python3
 BuildRequires : pypi(bleach)
 BuildRequires : pypi(defusedxml)
 BuildRequires : pypi(entrypoints)
@@ -118,7 +107,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1641457859
+export SOURCE_DATE_EPOCH=1641521955
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
