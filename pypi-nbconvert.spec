@@ -4,7 +4,7 @@
 #
 Name     : pypi-nbconvert
 Version  : 6.5.0
-Release  : 61
+Release  : 62
 URL      : https://files.pythonhosted.org/packages/71/94/7b4fcc2f413a0f6cd2befe31da4c7df0eb4978e5a21a7aaddb008bba7e54/nbconvert-6.5.0.tar.gz
 Source0  : https://files.pythonhosted.org/packages/71/94/7b4fcc2f413a0f6cd2befe31da4c7df0eb4978e5a21a7aaddb008bba7e54/nbconvert-6.5.0.tar.gz
 Summary  : Converting Jupyter Notebooks
@@ -101,7 +101,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1656390181
+export SOURCE_DATE_EPOCH=1656392461
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
