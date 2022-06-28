@@ -4,7 +4,7 @@
 #
 Name     : pypi-nbconvert
 Version  : 6.5.0
-Release  : 62
+Release  : 63
 URL      : https://files.pythonhosted.org/packages/71/94/7b4fcc2f413a0f6cd2befe31da4c7df0eb4978e5a21a7aaddb008bba7e54/nbconvert-6.5.0.tar.gz
 Source0  : https://files.pythonhosted.org/packages/71/94/7b4fcc2f413a0f6cd2befe31da4c7df0eb4978e5a21a7aaddb008bba7e54/nbconvert-6.5.0.tar.gz
 Summary  : Converting Jupyter Notebooks
@@ -17,6 +17,10 @@ Requires: pypi-nbconvert-python = %{version}-%{release}
 Requires: pypi-nbconvert-python3 = %{version}-%{release}
 BuildRequires : buildreq-distutils3
 BuildRequires : pypi(setuptools)
+Patch1: backport-mistune-1.patch
+Patch2: backport-mistune-2.patch
+Patch3: backport-mistune-3.patch
+Patch4: backport-mistune-4.patch
 
 %description
 # nbconvert
@@ -92,6 +96,10 @@ python3 components for the pypi-nbconvert package.
 %prep
 %setup -q -n nbconvert-6.5.0
 cd %{_builddir}/nbconvert-6.5.0
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 pushd ..
 cp -a nbconvert-6.5.0 buildavx2
 popd
@@ -101,7 +109,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1656392461
+export SOURCE_DATE_EPOCH=1656451181
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "

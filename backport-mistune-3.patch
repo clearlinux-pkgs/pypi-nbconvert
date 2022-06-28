@@ -1,0 +1,86 @@
+From 16189b9782f2f0af4c32b4c9e6dda68149a0d0a9 Mon Sep 17 00:00:00 2001
+From: Tiago de Paula <tiagodepalves@gmail.com>
+Date: Sat, 23 Apr 2022 12:14:45 -0300
+Subject: [PATCH] Fix some discrepancies with mistune version 2
+
+- 'AXT_HEADING' is now requiring whitespace after the '#', fixed with a new regex
+- 're.Scanner' is not able to extract the correct group, the text needs trimming before use
+- 'javascript:...' links considered harmful by 'HTMLRenderer', should we disable it too?
+---
+ nbconvert/filters/markdown_mistune.py | 32 +++++++++++++++++++++++----
+ 1 file changed, 28 insertions(+), 4 deletions(-)
+
+diff --git a/nbconvert/filters/markdown_mistune.py b/nbconvert/filters/markdown_mistune.py
+index bba701760..0f3cd60ef 100644
+--- a/nbconvert/filters/markdown_mistune.py
++++ b/nbconvert/filters/markdown_mistune.py
+@@ -48,6 +48,9 @@ class MathBlockParser(BlockParser):
+ 
+     RULE_NAMES = ("multiline_math",) + BlockParser.RULE_NAMES
+ 
++    # Regex for header that doesn't require space after '#'
++    AXT_HEADING = re.compile(r" {0,3}(#{1,6})(?!#+)\s*([^\n]*?)$")
++
+     def parse_multiline_math(self, m, state):
+         """Pass token through mutiline math."""
+         return {"type": "multiline_math", "text": m.group(0)}
+@@ -63,6 +66,19 @@ def _dotall(pattern):
+     return f"(?s:{pattern})"
+ 
+ 
++def _strip(text, *, prefix, suffix):
++    """Remove prefix and suffix from text, if present.
++
++    `InlineParser` sometimes return these affixes, even though it shouldn't.
++    """
++    np, ns = len(prefix), len(suffix)
++    if text[:np] == prefix:
++        text = text[np:]
++    if text[-ns:] == suffix:
++        text = text[:-ns]
++    return text
++
++
+ class MathInlineParser(InlineParser):
+     r"""This interprets the content of LaTeX style math objects.
+ 
+@@ -78,11 +94,19 @@ class MathInlineParser(InlineParser):
+     RULE_NAMES = ("block_math", "inline_math", "latex_environment") + InlineParser.RULE_NAMES
+ 
+     def parse_inline_math(self, m, state):
+-        text = m.group(1) or m.group(2)
++        text = m.group(1)
++        if text:
++            text = _strip(text, prefix="$", suffix="$")
++        else:
++            text = _strip(m.group(2), prefix="\\\\(", suffix="\\\\)")
+         return "inline_math", text
+ 
+     def parse_block_math(self, m, state):
+-        text = m.group(1) or m.group(2)
++        text = m.group(1)
++        if text:
++            text = _strip(text, prefix="$$", suffix="$$")
++        else:
++            text = _strip(m.group(2), prefix="\\\\[", suffix="\\\\]")
+         return "block_math", text
+ 
+     def parse_latex_environment(self, m, state):
+@@ -107,7 +131,7 @@ class IPythonRenderer(HTMLRenderer):
+     def __init__(
+         self,
+         escape=True,
+-        allow_harmful_protocols=None,
++        allow_harmful_protocols=True,
+         embed_images=False,
+         exclude_anchor_links=False,
+         anchor_link_text="¶",
+@@ -206,7 +230,7 @@ def image(self, src, text, title):
+             if base64_url is not None:
+                 src = base64_url
+ 
+-        return super().image(src, title, text)
++        return super().image(src, text, title)
+ 
+     def _src_to_base64(self, src):
+         """Turn the source file into a base64 url.
