@@ -4,7 +4,7 @@
 #
 Name     : pypi-nbconvert
 Version  : 6.5.3
-Release  : 71
+Release  : 72
 URL      : https://files.pythonhosted.org/packages/ad/2e/5ce9f2a93940604740edb0ac804d874a1bc15b241b31fe608b0fa5b1f6c6/nbconvert-6.5.3.tar.gz
 Source0  : https://files.pythonhosted.org/packages/ad/2e/5ce9f2a93940604740edb0ac804d874a1bc15b241b31fe608b0fa5b1f6c6/nbconvert-6.5.3.tar.gz
 Summary  : Converting Jupyter Notebooks
@@ -17,6 +17,9 @@ Requires: pypi-nbconvert-python = %{version}-%{release}
 Requires: pypi-nbconvert-python3 = %{version}-%{release}
 BuildRequires : buildreq-distutils3
 BuildRequires : pypi(setuptools)
+# Suppress stripping binaries
+%define __strip /bin/true
+%define debug_package %{nil}
 Patch1: backport-mistune-1.patch
 Patch2: backport-mistune-2.patch
 Patch3: backport-mistune-3.patch
@@ -75,11 +78,9 @@ Provides: pypi(nbconvert)
 Requires: pypi(beautifulsoup4)
 Requires: pypi(bleach)
 Requires: pypi(defusedxml)
-Requires: pypi(entrypoints)
 Requires: pypi(jinja2)
 Requires: pypi(jupyter_core)
 Requires: pypi(jupyterlab_pygments)
-Requires: pypi(lxml)
 Requires: pypi(markupsafe)
 Requires: pypi(mistune)
 Requires: pypi(nbclient)
@@ -110,12 +111,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1660230818
+export SOURCE_DATE_EPOCH=1672291855
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -fno-lto "
-export FCFLAGS="$FFLAGS -fno-lto "
-export FFLAGS="$FFLAGS -fno-lto "
-export CXXFLAGS="$CXXFLAGS -fno-lto "
+export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
+export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
+export FFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CXXFLAGS="$CXXFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
 export MAKEFLAGS=%{?_smp_mflags}
 pypi-dep-fix.py . mistune
 python3 setup.py build
@@ -134,7 +135,7 @@ popd
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/pypi-nbconvert
-cp %{_builddir}/nbconvert-%{version}/LICENSE %{buildroot}/usr/share/package-licenses/pypi-nbconvert/4864371bd27fe802d84990e2a5ee0d60bb29e944
+cp %{_builddir}/nbconvert-%{version}/LICENSE %{buildroot}/usr/share/package-licenses/pypi-nbconvert/4864371bd27fe802d84990e2a5ee0d60bb29e944 || :
 python3 -tt setup.py build  install --root=%{buildroot}
 pypi-dep-fix.py %{buildroot} mistune
 echo ----[ mark ]----
