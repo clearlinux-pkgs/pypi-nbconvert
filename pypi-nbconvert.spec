@@ -6,10 +6,10 @@
 # autospec commit: 250a666
 #
 Name     : pypi-nbconvert
-Version  : 7.10.0
-Release  : 78
-URL      : https://files.pythonhosted.org/packages/5f/62/305a4cce31e0aa931c47758274486c4f0940271ca2efd9b7f2dafffb864f/nbconvert-7.10.0.tar.gz
-Source0  : https://files.pythonhosted.org/packages/5f/62/305a4cce31e0aa931c47758274486c4f0940271ca2efd9b7f2dafffb864f/nbconvert-7.10.0.tar.gz
+Version  : 7.11.0
+Release  : 79
+URL      : https://files.pythonhosted.org/packages/68/9e/3f261558d759175fe45688fdeff72058ac83479b07766eeca1ff50150531/nbconvert-7.11.0.tar.gz
+Source0  : https://files.pythonhosted.org/packages/68/9e/3f261558d759175fe45688fdeff72058ac83479b07766eeca1ff50150531/nbconvert-7.11.0.tar.gz
 Summary  : Converting Jupyter Notebooks
 Group    : Development/Tools
 License  : BSD-3-Clause BSD-3-Clause-Clear
@@ -93,10 +93,10 @@ python3 components for the pypi-nbconvert package.
 
 
 %prep
-%setup -q -n nbconvert-7.10.0
-cd %{_builddir}/nbconvert-7.10.0
+%setup -q -n nbconvert-7.11.0
+cd %{_builddir}/nbconvert-7.11.0
 pushd ..
-cp -a nbconvert-7.10.0 buildavx2
+cp -a nbconvert-7.11.0 buildavx2
 popd
 
 %build
@@ -104,7 +104,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1698936334
+export SOURCE_DATE_EPOCH=1699285781
 export GCC_IGNORE_WERROR=1
 CLEAR_INTERMEDIATE_CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 CLEAR_INTERMEDIATE_FCFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
