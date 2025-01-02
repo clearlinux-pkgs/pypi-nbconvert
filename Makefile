@@ -1,5 +1,5 @@
 PKG_NAME := pypi-nbconvert
-URL = https://files.pythonhosted.org/packages/af/e8/ba521a033b21132008e520c28ceb818f9f092da5f0261e94e509401b29f9/nbconvert-7.16.4.tar.gz
+URL = https://files.pythonhosted.org/packages/46/2c/d026c0367f2be2463d4c2f5b538e28add2bc67bc13730abb7f364ae4eb8b/nbconvert-7.16.5.tar.gz
 ARCHIVES = 
 
 include ../common/Makefile.common
